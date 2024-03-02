@@ -1,5 +1,5 @@
 {
-  "name": "lab-software",
+  "name": "lamadevnext14dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,8 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.1.1"
+    "@next/eslint-plugin-next": "14.0.1",
+    "bcrypt": "5.1.1",
+    "next": "14.0.1",
+    "next-auth": "5.0.0-beta.3",
+    "react": "18",
+    "react-dom": "18",
+    "react-icons": "4.11.0",
+    "recharts": "2.9.0",
+    "use-debounce": "9.0.4"
+  },
+  "devDependencies": {
+    "eslint": "8",
+    "eslint-config-next": "14.0.1"
   }
 }
