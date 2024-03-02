@@ -11,6 +11,7 @@
   "dependencies": {
     "@next/eslint-plugin-next": "14.0.1",
     "bcrypt": "5.1.1",
+    "mongoose": "^8.2.0",
     "next": "14.0.1",
     "next-auth": "5.0.0-beta.3",
     "react": "18",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "eslint": "8",
-    "eslint-config-next": "14.0.1"
+    "eslint-config-next": "14.0.1",
+    "prisma": "^5.10.2"
   }
 }
