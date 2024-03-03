@@ -13,6 +13,8 @@ import {
   MdHelpCenter,
   MdLogout,
 } from "react-icons/md";
+
+import { FaUserDoctor,FaHospital,FaPersonShelter } from "react-icons/fa6";
 // import { auth, signOut } from "@/app/auth";
 
 const menuItems = [
@@ -25,20 +27,30 @@ const menuItems = [
         icon: <MdDashboard />,
       },
       {
-        title: "Users",
-        path: "/dashboard/users",
+        title: "Patient",
+        path: "/dashboard/patients",
         icon: <MdSupervisedUserCircle />,
       },
       {
-        title: "Products",
-        path: "/dashboard/products",
+        title: "Tests",
+        path: "/dashboard/tests",
         icon: <MdShoppingBag />,
       },
       {
-        title: "Transactions",
-        path: "/dashboard/transactions",
-        icon: <MdAttachMoney />,
+        title: "Hospitals",
+        path: "/dashboard/hospitals",
+        icon: <FaHospital />,
       },
+      {
+        title: "Doctors",
+        path: "/dashboard/doctors",
+        icon: <FaUserDoctor />,
+      },
+      {
+        title: "Receptionist",
+        path: "/dashboard/receptionist",
+        icon: <FaPersonShelter />,
+      }
     ],
   },
   {

@@ -28,6 +28,15 @@
   padding: 10px;
 }
 
+.table thead{
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.table tbody tr{
+  border-bottom: 1px solid var(--bg);
+}
+
 .user{
   display: flex;
   align-items: center;
@@ -58,4 +67,10 @@
 
 .delete{
   background-color: crimson;
+}
+
+.active{
+  background-color: #4ad341;
+  padding: 4px;
+  border-radius: 5px;
 }

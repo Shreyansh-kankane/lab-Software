@@ -6,14 +6,23 @@ import {
   MdOutlineChat,
   MdPublic,
   MdSearch,
+  MdChevronRight
 } from "react-icons/md";
 
 const Navbar = () => {
   const pathname = usePathname();
 
+  const path = pathname.split("/");
+
   return (
     <div className={styles.container}>
-      <div className={styles.title}>{pathname.split("/").pop()}</div>
+      <div className={styles.title}> 
+        {path.map((p) => (
+          <span key={p}>{p} <MdChevronRight /> </span>
+          
+        ))}
+
+      </div>
       <div className={styles.menu}>
         <div className={styles.search}>
           <MdSearch />

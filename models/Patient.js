@@ -5,17 +5,24 @@ const PatientSchema = new Schema({
         type: String,
         required: true,
     },
-    email: {
-        type: String,
-        default: null
+    Age: {
+        type: Number,
+        required: true,
     },
-    gender: {
+    Gender: {
+        type: String,
+        required: true,
+    },
+    RegisteredBy: {
+        type: String,
+        required: true,
+    },
+    Email: {
         type: String,
         default: null
     },
     MobileNo: {
         type: String,
-        required: true,
     },
     Address: {
         type: String,
@@ -52,12 +59,8 @@ const PatientSchema = new Schema({
         type: String,
         enum: ['Self', 'Associate', 'Hospital', 'Doctor'],
     },
-    RegisteredBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        default: null
-    },
 }, { timestamps: true }
 )
+mongoose.models = {};
 
 export default mongoose.models.Patient || mongoose.model('Patient', PatientSchema);

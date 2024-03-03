@@ -1,7 +1,7 @@
 import mongoose,{Schema} from "mongoose";
 
-const LabTestSchema = new Schema({
-    TestName: {
+const labtest = new Schema({
+    Name: {
         type: String,
         required: true,
     },
@@ -14,19 +14,18 @@ const LabTestSchema = new Schema({
         type: Number,
         required: true,
     },
-    Lab: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Lab',
-        required: true
+    LabName: {
+        type: String,
+        required: true,
     },
     Hospital: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital',
-        required: true
     },
     Available: {
-        type: Boolean,
-        default: true
+        type: String,
+        enum: ['Yes', 'No'],
+        default: 'Yes'
     },
     Status: {
         type: String,
@@ -37,10 +36,12 @@ const LabTestSchema = new Schema({
         type: String,
         default: null
     },
-    Value: {
+    Type: {
         type: String,
         enum: ['Numeric', 'Template', 'Free Writing', 'Yes/No' ],
     },
 })
 
-export default  mongoose.models.LabTest || mongoose.model("LabTest", LabTestSchema);
+mongoose.models = {};
+
+export default mongoose.model.LabTest || mongoose.model("LabTest", labtest);

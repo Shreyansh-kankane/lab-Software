@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    min-width: max-content;
+}
+
+.image {
+    width: 50%;
+    height: 400px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--bgSoft);
+}
+
+.errorContainer button {
+    margin-top: 20px;
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: grey;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}

@@ -1,78 +1,66 @@
-// import { deleteUser } from "@/app/lib/actions";
-// import { fetchUsers } from "@/app/lib/data";
+import { fetchPatients } from "@/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/users/users.module.css";
-import Image from "next/image";
 import Link from "next/link";
 
-const UsersPage = async ({ searchParams }) => {
+const PatientsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
   const page = searchParams?.page || 1;
-  // const { count, users } = await fetchUsers(q, page);
-
-  const count = 1;
-  const users = [
-    {
-      id: 1,
-      username: "John Doe",
-      email: "johnDoe@email.com",
-      createdAt: new Date(),
-      isAdmin: true,
-      isActive: true,
-      
-    }
-  ];
-
+  const { count, patients } = await fetchPatients(q, page);
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <Search placeholder="Search for a user..." />
-        <Link href="/dashboard/users/add">
+        <Link href="/dashboard/patients/add">
           <button className={styles.addButton}>Add New</button>
         </Link>
       </div>
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Created At</td>
-            <td>Role</td>
-            <td>Status</td>
+            <td>Patient Code</td>
+            <td>Patient Name</td>
+            <td>Age</td>
+            <td>Gender</td>
+            <td>Contact No</td>
+            <td>Registered By</td>
+            <td>Registered On</td>
             <td>Action</td>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>
-                <div className={styles.user}>
+          {patients.map((patient) => (
+            <tr key={patient.id}>
+              <td> {patient.PatientCode}
+                {/* <div className={styles.user}>
                   <Image
-                    src={user.img || "/noavatar.png"}
+                    src={patient.img || "/noavatar.png"}
                     alt=""
                     width={40}
                     height={40}
                     className={styles.userImage}
                   />
-                  {user.username}
-                </div>
+                  {patient.Code}
+                </div> */}
               </td>
-              <td>{user.email}</td>
-              <td>{user.createdAt?.toString().slice(4, 16)}</td>
-              <td>{user.isAdmin ? "Admin" : "Client"}</td>
-              <td>{user.isActive ? "active" : "passive"}</td>
+              <td>{patient.Name}</td>
+              <td>{patient.Age}</td>
+              <td>{patient.Gender}</td>
+              <td>{patient.MobileNo}</td>
+              <td>{patient.RegisteredBy}</td>
+              <td>{patient.createdAt?.toString().slice(0, 10)}</td>
               <td>
                 <div className={styles.buttons}>
-                  <Link href={`/dashboard/users/${user.id}`}>
+                  <Link href={`/dashboard/patients/${patient.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>
-                      View
+                      Update
                     </button>
                   </Link>
                   <form action="">
-                    <input type="hidden" name="id" value={(user.id)} />
+                    <input type="hidden" name="id" value={(patient.id)} />
                     <button className={`${styles.button} ${styles.delete}`}>
-                      Delete
+                      Add Tests
                     </button>
                   </form>
                 </div>
@@ -86,4 +74,4 @@ const UsersPage = async ({ searchParams }) => {
   );
 };
 
-export default UsersPage;
+export default PatientsPage;

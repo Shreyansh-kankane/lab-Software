@@ -14,11 +14,9 @@ const DoctorSchema = new Schema({
         required: true,
     },
     Hospital: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hospital',
-        default: null
+        type: String,
+        required: true,
     },
-   
 });
 
 export default models.Doctor || mongoose.model("Doctor", DoctorSchema);
