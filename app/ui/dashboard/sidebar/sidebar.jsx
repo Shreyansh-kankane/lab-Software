@@ -6,6 +6,8 @@ import {
   MdSupervisedUserCircle,
   MdShoppingBag,
   MdAttachMoney,
+  MdReceipt,
+  MdPersonAddAlt1 ,
   MdWork,
   MdAnalytics,
   MdPeople,
@@ -50,12 +52,22 @@ const menuItems = [
         title: "Receptionist",
         path: "/dashboard/receptionist",
         icon: <FaPersonShelter />,
+      },
+      {
+        title: "Add Members",
+        path: "/dashboard/addMembers",
+        icon: <MdPersonAddAlt1/>,
       }
     ],
   },
   {
     title: "Analytics",
     list: [
+      {
+        title: "Invoices",
+        path: "/dashboard/invoices",
+        icon: <MdReceipt />,
+      },
       {
         title: "Revenue",
         path: "/dashboard/revenue",
@@ -65,11 +77,6 @@ const menuItems = [
         title: "Reports",
         path: "/dashboard/reports",
         icon: <MdAnalytics />,
-      },
-      {
-        title: "Teams",
-        path: "/dashboard/teams",
-        icon: <MdPeople />,
       },
     ],
   },

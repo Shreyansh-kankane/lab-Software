@@ -1,8 +1,9 @@
 import { fetchDoctors } from "@/lib/data";
-// import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/users/users.module.css";
 import Link from "next/link";
+import Pagination from "@/app/ui/dashboard/pagination/pagination";
+import { ITEM_PER_PAGE } from "@/lib/constants";
 
 const DoctorsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
@@ -23,6 +24,7 @@ const DoctorsPage = async ({ searchParams }) => {
             <td>Specialist At</td>
             <td>Contact</td>
             <td>Hospital</td>
+            <td>Update</td>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +47,11 @@ const DoctorsPage = async ({ searchParams }) => {
           ))}
         </tbody>
       </table>
-      {/* <Pagination count={count} /> */}
+      {
+        count > ITEM_PER_PAGE && (
+          <Pagination count={count} />
+        )
+      }
     </div>
   );
 };

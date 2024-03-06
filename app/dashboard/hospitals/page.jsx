@@ -1,8 +1,10 @@
 import { fetchHospitals } from "@/lib/data";
-// import Pagination from "@/app/ui/dashboard/pagination/pagination";
+import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/users/users.module.css";
 import Link from "next/link";
+import { ITEM_PER_PAGE } from "@/lib/constants";
+
 
 const HospitalPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
@@ -46,7 +48,11 @@ const HospitalPage = async ({ searchParams }) => {
           ))}
         </tbody>
       </table>
-      {/* <Pagination count={count} /> */}
+      {
+        count > ITEM_PER_PAGE && (
+          <Pagination count={count} />
+        )
+      }
     </div>
   );
 };

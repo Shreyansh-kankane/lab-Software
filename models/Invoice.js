@@ -1,4 +1,5 @@
 import mongoose,{Schema,models} from "mongoose";
+import LabTest from "./LabTest";
 
 const InvoiceSchema = new Schema({
 
@@ -21,7 +22,7 @@ const InvoiceSchema = new Schema({
         required: true,
     },
     Tests: {
-        type: Array,
+        type: [LabTest.Schema],
         required: true,
     },
     TotalAmount: {

@@ -3,6 +3,7 @@ import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import Search from "@/app/ui/dashboard/search/search";
 import styles from "@/app/ui/dashboard/users/users.module.css";
 import Link from "next/link";
+import { ITEM_PER_PAGE } from "@/lib/constants";
 
 const PatientsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
@@ -32,18 +33,7 @@ const PatientsPage = async ({ searchParams }) => {
         <tbody>
           {patients.map((patient) => (
             <tr key={patient.id}>
-              <td> {patient.PatientCode}
-                {/* <div className={styles.user}>
-                  <Image
-                    src={patient.img || "/noavatar.png"}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className={styles.userImage}
-                  />
-                  {patient.Code}
-                </div> */}
-              </td>
+              <td>{patient.PatientCode}</td>
               <td>{patient.Name}</td>
               <td>{patient.Age}</td>
               <td>{patient.Gender}</td>
@@ -57,19 +47,26 @@ const PatientsPage = async ({ searchParams }) => {
                       Update
                     </button>
                   </Link>
-                  <form action="">
-                    <input type="hidden" name="id" value={(patient.id)} />
+                  <Link
+                    href={`/dashboard/patients/addTest/${patient.id}`}
+                  >
                     <button className={`${styles.button} ${styles.delete}`}>
                       Add Tests
                     </button>
-                  </form>
+  
+                  </Link>
+                   
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <Pagination count={count} />
+      {
+        count > ITEM_PER_PAGE && (
+          <Pagination count={count} />
+        )
+      }
     </div>
   );
 };

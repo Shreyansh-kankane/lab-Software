@@ -25,7 +25,7 @@ const labtest = new Schema({
     Available: {
         type: String,
         enum: ['Yes', 'No'],
-        default: 'Yes'
+        default: 'Yes',
     },
     Status: {
         type: String,
