@@ -50,12 +50,6 @@ const LabTestPage = async ({ searchParams }) => {
                       Update
                     </button>
                   </Link>
-                  <form action="">
-                    <input type="hidden" name="id" value={(test.id)} />
-                    <button className={`${styles.button} ${styles.delete}`}>
-                      Add Tests
-                    </button>
-                  </form>
                 </div>
               </td>
             </tr>

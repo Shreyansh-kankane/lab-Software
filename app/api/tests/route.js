@@ -5,7 +5,7 @@ import LabTest from "@/models/LabTest";
 
 export async function GET(req,res){
     try {
-        await connectToDB();
+        connectToDB();
         const tests = await LabTest.find({Status:'Active',Available:"Yes"});
         return NextResponse.json({tests:tests},{status:200});
     } catch (error) {

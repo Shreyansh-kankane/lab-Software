@@ -23,8 +23,6 @@ const LoginPage = () => {
 
     const {Email,Password} = formData;
 
-    console.log(formData);
-
     try{
       const response = await signIn("credentials",{redirect:false,Email,Password});
       if(response.error){

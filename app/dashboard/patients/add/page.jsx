@@ -1,10 +1,22 @@
 import { addPatient } from "@/lib/actions";
 import styles from "@/app/ui/dashboard/users/addUser/addUser.module.css";
+import { getSession } from "@/lib/utils";
 
-const AddUserPage = () => {
+const AddPatientPage = async () => {
+  
+  const session = await getSession();
+  if (!session) {
+    return null;
+  }
+  const handleFormSubmit = async (formData) => {
+   "use server"
+    const RegisteredBy = session.user.name;
+    await addPatient(formData, RegisteredBy);
+  };
+
   return (
     <div className={styles.container}>
-      <form action={addPatient} className={styles.form}>
+      <form action={handleFormSubmit} className={styles.form}>
         <input type="text" placeholder="Patient Name" name="Name" required autoComplete="off" />
         <input type="number" placeholder="Age" name="Age" required  autoComplete="off"/>
 
@@ -30,4 +42,4 @@ const AddUserPage = () => {
   );
 };
 
-export default AddUserPage;
+export default AddPatientPage;

@@ -18,8 +18,8 @@ import {
 
 import { FaUserDoctor,FaHospital,FaPersonShelter } from "react-icons/fa6";
 import { signOut } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import LogoutBtn from "@/components/LogoutBtn";
+import { getSession } from "@/lib/utils";
 
 const menuItems = [
   {
@@ -101,7 +101,7 @@ const menuItems = [
 
 const Sidebar = async () => {
 
-  const {user} = await getServerSession(authOptions)
+  const session = await getSession();
 
   return (
     <div className={styles.container}>
@@ -114,8 +114,8 @@ const Sidebar = async () => {
           height="50"
         />
         <div className={styles.userDetail}>
-          <span className={styles.username}>{user.name}</span>
-          <span className={styles.userTitle}>{user.role}</span>
+          <span className={styles.username}>{session?.user.name}</span>
+          <span className={styles.userTitle}>{session?.user.role}</span>
         </div>
       </div>
       <ul className={styles.list}>
@@ -128,18 +128,7 @@ const Sidebar = async () => {
           </li>
         ))}
       </ul>
-      <form
-        action={async () => {
-          "use server";
-          await signOut();
-        }}
-      >
-        <button className={styles.logout}>
-          <MdLogout />
-          Logout
-        </button>
-      </form>
-
+      <LogoutBtn styles={styles.logout} />
     </div>
   );
 };
