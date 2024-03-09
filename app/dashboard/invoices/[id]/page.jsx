@@ -27,7 +27,7 @@ function SingleInvoicePage({params}) {
       setCreatedAtDate(new Date(data.createdAt).toString());
     }
     getInvoice();
-  },[])
+  },[id])
 
   return (
     <div>

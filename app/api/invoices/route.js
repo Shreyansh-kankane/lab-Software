@@ -8,7 +8,6 @@ export async function POST(req,res){
     try {
         connectToDB();
         const invoice = await Invoice.findById(id).populate('Patient Tests');
-        console.log(invoice);
         return NextResponse.json(invoice);
         
     } catch (error) {
