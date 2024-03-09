@@ -75,7 +75,7 @@
 }
 
 .active{
-  background-color: #4ad341;
+  background-color: #39b131;
   padding: 4px;
   border-radius: 5px;
 }
@@ -85,3 +85,21 @@
   background-color: #004fff;
 }
 
+
+.status{
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  color: white;
+} 
+
+.pending{
+  background-color: #f7cb7375;
+}
+
+.done{
+  background-color: #39b131;
+}
+.cancelled{
+  background-color: red;
+}

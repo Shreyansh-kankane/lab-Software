@@ -38,7 +38,17 @@ const InvoicePage = async ({ searchParams }) => {
               <td>{ invoice.PaymentDate.toString().slice(0,10)}</td>
               <td> ₹ {invoice.PaidAmount}</td>
               <td> ₹ {invoice.DueAmount}</td>
-              <td>{invoice.Status}</td>
+              <td>
+                <span 
+                  className={`${styles.status} ${
+                    invoice.Status === "Paid"
+                      ? styles.done
+                      : styles.pending
+                  }`}
+                >
+                  {invoice.Status}
+                </span>
+              </td>
               <td>{invoice.PrintedBy}</td>
               <td>
                 <div className={styles.buttons}>
