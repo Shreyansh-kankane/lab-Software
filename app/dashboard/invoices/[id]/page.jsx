@@ -22,6 +22,7 @@ function SingleInvoicePage({params}) {
         body: JSON.stringify({id}),
       })
       const data = await res.json();
+      console.log(data);
       setData(data);
       setPaymentDate(new Date(data.PaymentDate).toLocaleString());
       setCreatedAtDate(new Date(data.createdAt).toString());
