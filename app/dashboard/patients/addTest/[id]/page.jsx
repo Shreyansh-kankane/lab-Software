@@ -28,7 +28,18 @@ function page({params}) {
       const data = await res.json();
       setTests(data.tests);
     }
+
+    async function getPatientTests(){
+      const res = await fetch(`/api/patients`,{
+        method: 'POST',
+        body: JSON.stringify({id})
+      })
+      const data = await res.json();
+      setSelectedTests(data.Patient.Tests);
+      setTotalAmount(data.Patient.Tests.reduce((acc,test)=> acc + test.Price,0));
+    }
     getAllTests();
+    getPatientTests();
   },[])
 
   const handleChange = (e) => {

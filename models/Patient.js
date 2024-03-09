@@ -54,10 +54,18 @@ const PatientSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    Invoices: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Invoice',
+    }],
+
     ReferType: {
         type: String,
-        enum: ['Self', 'Associate', 'Hospital', 'Doctor'],
+        enum: ['Self', 'Associate', 'Hospital', 'Doctor','PRO'],
     },
+    ReferBy: {
+        type: String,
+    }
 
 }, { timestamps: true }
 )

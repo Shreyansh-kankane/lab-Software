@@ -1,20 +1,41 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import PrintBtn from '@/components/PrintBtn';
 import { useRef } from 'react';
 import styles from "./invoice.module.css"
 import Image from 'next/image';
+import { useState } from 'react';
+import { PathologyDetails} from '@/lib/constants';
 
 function SingleInvoicePage({params}) {
   const id = params.id;
   const componentRef = useRef();
+
+  const [data,setData] = useState({});
+  const [referBy,setReferBy] = useState('');
+  const [paymentDate,setPaymentDate] = useState('');
+  const [createdAtDate,setCreatedAtDate] = useState('');
+
+  useEffect(()=>{
+    async function getInvoice(){
+      const res = await fetch(`/api/invoices`,{
+        method: 'POST',
+        body: JSON.stringify({id}),
+      })
+      const data = await res.json();
+      setData(data);
+      setPaymentDate(new Date(data.PaymentDate).toString());
+      setCreatedAtDate(new Date(data.createdAt).toString());
+    }
+    getInvoice();
+  },[])
 
   return (
     <div>
       <div ref={componentRef} className={styles.wrapper}>
         {/* header */}
         <div className={styles.header}>
-          <div>
+          <div style={{flex:1}}>
             <Image
               src={'/logo.png'}
               alt="logo"
@@ -23,31 +44,32 @@ function SingleInvoicePage({params}) {
             />
           </div>
           
-          <div>
-            <h2 style={{fontSize:'50px'}}>MEHER PATHALOGY</h2>
-            <h4>Contact 123434343, +91 123435233</h4>
+          <div className={styles.title}>
+            <h1>{PathologyDetails.NAME}</h1>
+            <h4>Contact {PathologyDetails.CONTACT}</h4>
           </div>
 
-          <address>
-            <p>Address: 123, XYZ Road, ABC City</p>
-            <p>Phone: 1234567890</p>
-            <p>Email: abc@emai;.com </p>
+          <address className={styles.pathlogyInfo}>
+            <p>Address: {PathologyDetails.ADDRESS}</p>
+            <p>Email: {PathologyDetails.EMAIL} </p>
           </address>
         </div>
 
         {/* patient details */}
         <div className={styles.patientDetailsWrapper}>
+
           <div className={styles.patientDetails}>
             <h3>Bill Cum Reciept</h3>
-            <h3>Name: Shreyansh</h3>
-            <h3>Bill Date: 09-02-23</h3>
-            <h3>Referal By: S.G.P.I</h3>
+            <h3>Name: {data.Patient?.Name}</h3>
+            <h3>Bill Date: {createdAtDate} </h3>
+            <h3>Referal By: {'NA'}</h3>
           </div>
+
           <div className={styles.patientDetails}>
-            <h3>Invoice Id: dekjeor92312</h3>
-            <h3>Age: 47 years</h3>
-            <h3> Gender: Male </h3>
-            <h3>Mobile No: 9123293-232</h3>
+            <h3>Invoice Id: {data._id}</h3>
+            <h3>Age: {data.Patient?.Age} years</h3>
+            <h3> Gender: {data.Patient?.Gender} </h3>
+            <h3>Mobile No: {data.Patient?.MobileNo || 'NA'}</h3>
           </div>
         </div>  
 
@@ -64,27 +86,29 @@ function SingleInvoicePage({params}) {
             </tr>
           </thead>
           <tbody>
+            {data.Tests?.map((test,index) => (
+              <tr key={test._id}>
+                <td>{index + 1}</td>
+                <td>{test.Name}</td>
+                <td>{test.TestCode}</td>
+                <td>1</td>
+                <td>₹ {test.Price}</td>
+              </tr>
+            
+            ))}
             <tr>
-              <td>1</td>
-              <td>Test 1</td>
-              <th>123</th>
-              <td>2</td>
-              <td>₹ 100</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Discount</td>
+              <td>₹ {data.Discount}</td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Test 2</td>
-              <th>456</th>
-              <td>1</td>
-              <td>₹ 200</td>
-            </tr>
-
             <tr>
               <td></td>
               <td></td>
               <th></th>
               <td>Total</td>
-              <td>₹ 200</td>
+              <td>₹ {data.TotalAmount}</td>
             </tr>
 
           </tbody>
@@ -106,18 +130,10 @@ function SingleInvoicePage({params}) {
 
             <tr className={styles.paymentRow}>
               <td>1</td>
-              <td> Online  </td>
-              <th>02-02-24</th>
-              <td>NA</td>
-              <td>₹ 2000</td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <th></th>
-              <td>Paid Amount</td>
-              <td>₹ 1500</td>
+              <td> {data.PaymentMode}  </td>
+              <th> {paymentDate} </th>
+              <td>{data.PaymentReference || 'NA'}</td>
+              <td>₹ {data.PaidAmount}</td>
             </tr>
 
             <tr className={styles.dueAmountRow}>
@@ -125,20 +141,21 @@ function SingleInvoicePage({params}) {
               <td></td>
               <th></th>
               <td>Due Amount</td>
-              <td>₹ 500</td>
+              <td>₹ {data.DueAmount}</td>
             </tr>
 
           </tbody>
         </table>
 
         <div className={styles.footer}>
-          <h4>Printed On 09-02-24 10.20AM </h4>
-          <h4>Printed By: Dr. XYZ</h4>
+          <h4>Created On { createdAtDate } </h4>
+          <h4>Created By: {data.PrintedBy}</h4>
         </div>
 
       </div> 
 
     </div>
+
   )
 }
 
