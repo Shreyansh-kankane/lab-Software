@@ -19,13 +19,13 @@ function SingleInvoicePage({params}) {
     async function getInvoice(){
       const res = await fetch(`/api/invoices`,{
         method: 'POST',
-        body: JSON.stringify({id}),
+        body: JSON.stringify({id:id}),
       })
       const data = await res.json();
       console.log(data);
-      setData(data);
-      setPaymentDate(new Date(data.PaymentDate).toLocaleString());
-      setCreatedAtDate(new Date(data.createdAt).toString());
+      setData(data.invoice);
+      setPaymentDate(new Date(data.invoice.PaymentDate).toLocaleString());
+      setCreatedAtDate(new Date(data.invoice.createdAt).toLocaleString());
     }
     getInvoice();
   },[id])
