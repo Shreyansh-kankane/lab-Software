@@ -2,13 +2,15 @@
 import React,{useEffect, useState} from 'react'
 import { useRef } from 'react';
 import styles from "@/app/ui/dashboard/addTest/addTest.module.css"
-import { createInvoice } from '@/lib/actions';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 function page({params}) {
 
   const {data:session} = useSession();
   const inputRef = useRef();
+  const router = useRouter();
 
   const [tests,setTests] = useState([]);
   const [selectedTests,setSelectedTests] = useState([]);
@@ -63,8 +65,16 @@ function page({params}) {
       Remarks: formData.get('Remarks'),
       PrintedBy: session.user.name
     }
-    await createInvoice(data);
-    
+    const res = await fetch(`/api/createInvoice`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    if(res.status === 200){
+      router.push('/dashboard');
+    }
   }   
 
   return (

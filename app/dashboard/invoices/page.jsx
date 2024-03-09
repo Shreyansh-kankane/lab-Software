@@ -18,7 +18,8 @@ const InvoicePage = async ({ searchParams }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Invoice No</td>
+            <td>Invoice ID</td>
+            <td>Patient Name</td>
             <td>Total</td>
             <td>Payment Date</td>
             <td>Paid Amount</td>
@@ -32,6 +33,7 @@ const InvoicePage = async ({ searchParams }) => {
           {invoices.map((invoice) => (
               <tr key={invoice.id}>
               <td>{ `${invoice._id}`.slice(-12) }</td>
+              <td>{invoice.Patient.Name}</td>
               <td>{invoice.TotalAmount}</td>
               <td>{ invoice.PaymentDate.toString().slice(0,10)}</td>
               <td> ₹ {invoice.PaidAmount}</td>
@@ -41,7 +43,7 @@ const InvoicePage = async ({ searchParams }) => {
               <td>
                 <div className={styles.buttons}>
                   <Link href={`/dashboard/invoices/update/${invoice.id}`}>
-                    <button className={`${styles.button} ${styles.addButton}`}>
+                    <button className={`${styles.button} ${styles.addTest}`}>
                       Update
                     </button>
                   </Link>

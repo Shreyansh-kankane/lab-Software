@@ -33,32 +33,32 @@ const PatientSchema = new Schema({
     Lab: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Lab',
-        default: null
     },
+    Tests: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'LabTest',
+    }],
     PRO: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'PRO',
-        default: null
     },
     Hospital: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Hospital',
-        default: null
     },
     Doctor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctor',
-        default: null
     },
     Associate: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        default: null
     },
     ReferType: {
         type: String,
         enum: ['Self', 'Associate', 'Hospital', 'Doctor'],
     },
+
 }, { timestamps: true }
 )
 mongoose.models = {};

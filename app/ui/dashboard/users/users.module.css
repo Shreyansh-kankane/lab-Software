@@ -13,11 +13,16 @@
 
 .addButton{
   padding: 10px;
-  background-color: #5d57c9;
-  color: var(--text);
+  background-color: #ffffff;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 15px;
+}
+
+.addButton:hover{
+  background-color: #d4cfcf;
 }
 
 .table{
@@ -62,7 +67,7 @@
 }
 
 .view{
-  background-color: teal;
+  background-color: #ff007f;
 }
 
 .delete{
@@ -76,5 +81,7 @@
 }
 
 
-
+.addTest {
+  background-color: #004fff;
+}
 

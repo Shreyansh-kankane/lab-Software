@@ -20,7 +20,7 @@ const PatientsPage = async ({ searchParams }) => {
       <table className={styles.table}>
         <thead>
           <tr>
-            <td>Patient Code</td>
+            <td>Patient ID</td>
             <td>Patient Name</td>
             <td>Age</td>
             <td>Gender</td>
@@ -33,7 +33,7 @@ const PatientsPage = async ({ searchParams }) => {
         <tbody>
           {patients.map((patient) => (
             <tr key={patient.id}>
-              <td>{patient.PatientCode}</td>
+              <td>{`${patient._id}`.slice(-12)}</td>
               <td>{patient.Name}</td>
               <td>{patient.Age}</td>
               <td>{patient.Gender}</td>
@@ -42,7 +42,12 @@ const PatientsPage = async ({ searchParams }) => {
               <td>{patient.createdAt?.toString().slice(0, 10)}</td>
               <td>
                 <div className={styles.buttons}>
-                  <Link href={`/dashboard/patients/${patient.id}`}>
+                  <Link href={
+                    {
+                      pathname: `/dashboard/patients/${patient.id}`,
+                    }
+                  
+                  }>
                     <button className={`${styles.button} ${styles.view}`}>
                       Update
                     </button>
@@ -50,7 +55,7 @@ const PatientsPage = async ({ searchParams }) => {
                   <Link
                     href={`/dashboard/patients/addTest/${patient.id}`}
                   >
-                    <button className={`${styles.button} ${styles.delete}`}>
+                    <button className={`${styles.button} ${styles.addTest}`}>
                       Add Tests
                     </button>
   
