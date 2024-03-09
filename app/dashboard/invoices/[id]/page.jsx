@@ -12,7 +12,6 @@ function SingleInvoicePage({params}) {
   const componentRef = useRef();
 
   const [data,setData] = useState({});
-  const [referBy,setReferBy] = useState('');
   const [paymentDate,setPaymentDate] = useState('');
   const [createdAtDate,setCreatedAtDate] = useState('');
 
@@ -24,7 +23,7 @@ function SingleInvoicePage({params}) {
       })
       const data = await res.json();
       setData(data);
-      setPaymentDate(new Date(data.PaymentDate).toString());
+      setPaymentDate(new Date(data.PaymentDate).toLocaleString());
       setCreatedAtDate(new Date(data.createdAt).toString());
     }
     getInvoice();
@@ -39,8 +38,8 @@ function SingleInvoicePage({params}) {
             <Image
               src={'/logo.png'}
               alt="logo"
-              width={140}
-              height={140}
+              width={120}
+              height={120}
             />
           </div>
           
@@ -153,6 +152,9 @@ function SingleInvoicePage({params}) {
         </div>
 
       </div> 
+
+      <PrintBtn reference={componentRef} styles={styles.printBtn}/>
+
 
     </div>
 

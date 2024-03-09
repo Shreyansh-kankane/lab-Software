@@ -2,11 +2,11 @@
 import React from 'react'
 import ReactToPrint from 'react-to-print'
 
-function PrintBtn({ref}) {
+function PrintBtn({reference,styles}) {
   return (
    <ReactToPrint
-    trigger={() => <button>Print</button>}
-    content={() => ref.current}
+    trigger={() => <button className={styles}>Print</button>}
+    content={() => reference.current}
    />
 
   )
