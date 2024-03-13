@@ -17,6 +17,11 @@ const DoctorSchema = new Schema({
         type: String,
         required: true,
     },
+    creditAmount: {
+        type: Number,
+        default: 0,
+    },
+
 });
 
 export default models.Doctor || mongoose.model("Doctor", DoctorSchema);

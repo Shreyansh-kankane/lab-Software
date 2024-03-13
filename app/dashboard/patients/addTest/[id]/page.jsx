@@ -17,10 +17,12 @@ function page({params}) {
   const [searchTest,setSearchTest] = useState("");
   const [discount,setDiscount] = useState(0); 
   const [totalAmount,setTotalAmount] = useState(0);
+  const [patientDetails, setPatientDetails] = useState({});
 
   const id = params.id;
 
   useEffect(()=>{
+    
     async function getAllTests(){
       const res = await fetch(`/api/tests`,{
         method: 'GET'
@@ -29,17 +31,23 @@ function page({params}) {
       setTests(data.tests);
     }
 
-    async function getPatientTests(){
-      const res = await fetch(`/api/patients`,{
+    async function getPatientDetails(){
+      const res = await fetch(`/api/patient`,{
         method: 'POST',
-        body: JSON.stringify({id})
+        body: JSON.stringify({id:id})
       })
       const data = await res.json();
-      setSelectedTests(data.Patient.Tests);
-      setTotalAmount(data.Patient.Tests.reduce((acc,test)=> acc + test.Price,0));
-    }
-    getAllTests();
-    getPatientTests();
+      console.log(data.patient);
+      if(data.patient){
+        setPatientDetails(data.patient)
+        if(data.patient.Tests){
+            setSelectedTests(data.patient.Tests);
+            setTotalAmount(data.patient.Tests.reduce((acc,test)=> acc+test.Price,0))
+          }
+        }
+      }
+      getAllTests();
+      getPatientDetails();
   },[])
 
   const handleChange = (e) => {
@@ -49,9 +57,9 @@ function page({params}) {
   const handleAddTest = () => {
     for(let i=0;i<tests.length;i++){
       if(tests[i].Name == searchTest || tests[i].TestCode == searchTest ){
-        if(selectedTests.indexOf(tests[i]) == -1){
-          setSelectedTests([...selectedTests,tests[i]]);
-          setTotalAmount(totalAmount + tests[i].Price);
+        if(selectedTests?.indexOf(tests[i]) == -1){
+          setSelectedTests((prevState)=> [...prevState,tests[i]]);
+          setTotalAmount((prevState)=> prevState + tests[i].Price);
         }
       }
     }
@@ -65,9 +73,8 @@ function page({params}) {
   }
 
   const handleSubmit = async (formData)=>{
-    const data = {
+    const invoice_data = {
       Patient: id,
-      Tests: selectedTests.map((test)=> test._id),
       TotalAmount: totalAmount,
       Discount: discount,
       PaymentMode: formData.get('PaymentMode'),
@@ -76,21 +83,56 @@ function page({params}) {
       Remarks: formData.get('Remarks'),
       PrintedBy: session.user.name
     }
-    const res = await fetch(`/api/createInvoice`,{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    if(res.status === 200){
-      router.push('/dashboard');
+    const tests = selectedTests.map((test)=> test._id);
+
+    try {
+
+      const res = await fetch('/api/addPatientTests',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id:id,Tests:tests})
+      })
+
+      if(res.ok){
+        const res = await fetch(`/api/createInvoice`,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(invoice_data)
+        })
+  
+        if(res.status === 200){
+          router.push('/dashboard');
+        }
+        else {
+          console.log('Error')
+          throw new Error('Failed to create invoice');
+        }
+      }
+      else {
+        console.log('Error')
+        throw new Error('Failed to add test');
+      }
+
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to update tests');
     }
   }   
 
   return (
     
       <div className={styles.wrapper}>
+
+        <div className={styles.container}>
+            <h2> Patient Details </h2>
+            <p> Name: {patientDetails?.Name} </p>
+            <p> Gender: {patientDetails?.Gender} </p>
+            <p> Age: {patientDetails?.Age} </p>
+        </div>  
 
         <div className={styles.container}>
 
@@ -118,7 +160,7 @@ function page({params}) {
                 </tr>
               </thead>
               <tbody>
-                {selectedTests.map((test,index) => (
+                {selectedTests?.map((test,index) => (
                   <tr key={test._id}>
                     <td>{index + 1}</td>
                     <td>{test.TestCode}</td>
@@ -139,7 +181,7 @@ function page({params}) {
                   </tr>
                 ))}
               
-                {selectedTests.length>0 && <tr>
+                {selectedTests?.length>0 && <tr>
                   <td></td>
                   <td>Total</td>
                   <td></td>
@@ -148,7 +190,7 @@ function page({params}) {
                   </td>
                 </tr>}
 
-                {selectedTests.length>0 && <tr>
+                {selectedTests?.length>0 && <tr>
                   <td></td>
                   <td>Discount</td>
                   <td></td>
@@ -157,7 +199,7 @@ function page({params}) {
                   </td>
                 </tr>}
 
-                {selectedTests.length>0 && <tr>
+                {selectedTests?.length>0 && <tr>
                   <td></td>
                   <td>Net Total</td>
                   <td></td>

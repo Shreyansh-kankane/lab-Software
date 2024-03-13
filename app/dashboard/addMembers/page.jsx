@@ -21,8 +21,6 @@ export default function AddMembers() {
         <input type="text" placeholder='Address' name='address' required/>
         <input type="text" placeholder='Create password' name='password' required  minLength={6}/>
         <select name="Role" id="role" defaultValue="RECEPTIONIST" >
-            <option value="ADMIN">ADMIN</option>
-            <option value="DOCTOR">DOCTOR</option>
             <option value="RECEPTIONIST">RECEPTIONIST</option>
             <option value="PRO">PRO</option>
             <option value="ASSOCIATE">ASSOCIATE</option>

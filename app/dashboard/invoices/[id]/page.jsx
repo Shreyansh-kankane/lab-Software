@@ -21,6 +21,12 @@ function SingleInvoicePage({params}) {
         method: 'POST',
         body: JSON.stringify({id:id}),
       })
+      
+      if(!res.ok){
+        console.log('Failed to fetch invoice');
+        return;
+      }
+
       const data = await res.json();
       console.log(data);
       setData(data.invoice);
