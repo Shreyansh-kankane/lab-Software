@@ -6,6 +6,7 @@ import styles from "./invoice.module.css"
 import Image from 'next/image';
 import { useState } from 'react';
 import { PathologyDetails} from '@/lib/constants';
+import html2pdf from 'html2pdf.js';
 
 function SingleInvoicePage({params}) {
   const id = params.id;
@@ -35,6 +36,43 @@ function SingleInvoicePage({params}) {
     }
     getInvoice();
   },[id])
+
+  const handleSendEmail = async () => {
+    // generate pdf
+    // const element = componentRef.current;
+    // const opt = {
+    //   margin:       1,
+    //   filename:     'invoice.pdf',
+    //   image:        { type: 'jpeg', quality: 0.98 },
+    //   html2canvas:  { scale: 2 },
+    //   jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    // }
+    // html2pdf().from(element).set(opt).save();
+
+    const pdfBlob = await html2pdf()
+    .from(componentRef.current)
+    .outputPdf('blob');
+
+  // Create FormData object and append the PDF file
+  const formData = new FormData();
+  formData.append('pdf', pdfBlob, 'invoice.pdf');
+
+  try {
+    // Send FormData containing PDF file to backend
+    const response = await fetch(`/api/generate-email`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send email');
+    }
+
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+  }
 
   return (
     <div>
@@ -80,7 +118,7 @@ function SingleInvoicePage({params}) {
         </div>  
 
         <h2>Tests Registered </h2>
-        {/* tests table */}
+      {/* tests table */}
         <table className={styles.table}>
           <thead>
             <tr>
@@ -161,8 +199,15 @@ function SingleInvoicePage({params}) {
       </div> 
 
       <PrintBtn reference={componentRef} styles={styles.printBtn}/>
+      
+      <button
+        onClick={()=> handleSendEmail()}
+        className={styles.sendEmailBtn}
+      >
+        Send Email
 
-
+      </button>
+        
     </div>
 
   )

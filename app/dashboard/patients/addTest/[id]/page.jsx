@@ -73,19 +73,22 @@ function page({params}) {
   }
 
   const handleSubmit = async (formData)=>{
-    const invoice_data = {
-      Patient: id,
-      TotalAmount: totalAmount,
-      Discount: discount,
-      PaymentMode: formData.get('PaymentMode'),
-      PaidAmount: parseInt(formData.get('PaidAmount')) || 0,
-      PaymentReference: formData.get('PaymentReference'),
-      Remarks: formData.get('Remarks'),
-      PrintedBy: session.user.name
-    }
-    const tests = selectedTests.map((test)=> test._id);
-
+    
     try {
+      const invoice_data = {
+        Patient: id,
+        TotalAmount: totalAmount,
+        Discount: discount,
+        PaymentMode: formData.get('PaymentMode'),
+        PaidAmount: parseInt(formData.get('PaidAmount')) || 0,
+        PaymentReference: formData.get('PaymentReference'),
+        Remarks: formData.get('Remarks'),
+        PrintedBy: session.user.name
+      }
+      const tests = selectedTests.map((test)=> test._id);
+      
+      console.log("test ares ")
+      console.log(tests)
 
       const res = await fetch('/api/addPatientTests',{
         method: 'POST',
@@ -95,7 +98,11 @@ function page({params}) {
         body: JSON.stringify({id:id,Tests:tests})
       })
 
+
       if(res.ok){
+
+        invoice_data.Tests = tests;
+
         const res = await fetch(`/api/createInvoice`,{
           method: 'POST',
           headers: {

@@ -7,9 +7,9 @@ export async function POST(req,res){
     const {id,Tests} = JSON.parse(data);
     try {
         connectToDB();
-        const patient = await Patient.findById(id);
-        patient.Tests = Tests;
+        const patient = await Patient.findByIdAndUpdate(id,{Tests:Tests},{new:true});
         await patient.save();
+        console.log(patient);
         return NextResponse.json({message:'Tests added successfully'},{status:200});
     } catch (error) {
         console.log(error);

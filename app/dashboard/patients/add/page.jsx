@@ -1,7 +1,7 @@
 import styles from "@/app/ui/dashboard/users/singleUser/singleUser.module.css";
 import {fetchHospitalName,fetchDoctorName,fetchAssociateName,fetchPROName } from "@/lib/data";
 import {addPatient } from "@/lib/actions";
-import { centers } from "@/lib/constants";
+// import { centers } from "@/lib/constants";
 
 const SingleUserPage = async () => {
 
@@ -30,6 +30,9 @@ const SingleUserPage = async () => {
               <option value="Female">Female</option>
               <option value="Others">Others</option>
             </select>
+
+            <label>Age</label>
+            <input type="number" name="Age" placeholder={ 'patient-age' } />
 
             <label>Email</label>
             <input type="email" name="Email" placeholder={ 'patient-email' }  />

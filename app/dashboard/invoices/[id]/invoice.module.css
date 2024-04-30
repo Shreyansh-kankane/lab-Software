@@ -94,3 +94,16 @@
 .printBtn:hover{
     background-color: rgb(37, 119, 207, 0.8);
 }
+
+.sendEmailBtn{
+    padding: 10px;
+    background-color: rgb(171, 201, 232);
+    color: '#000000';
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    text-transform: uppercase;
+    margin: 10px 0px;
+    border-radius: 5px;
+    margin: 0px 10px;
+}
